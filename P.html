@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FJ CINTAS</title>
+  <style>
+    /* Estilos anteriores se mantienen igual hasta .banner */
+    
+    .slider-container {
+      position: relative;
+      max-width: 1200px;
+      margin: 1rem auto;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+    
+    .slider {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    
+    .slide {
+      min-width: 100%;
+      padding: 3rem 2rem;
+      text-align: center;
+      background-color: #400205;
+      box-sizing: border-box;
+    }
+    
+    .slide h2 {
+      margin-top: 0;
+      color: #fff;
+    }
+    
+    .slide p {
+      margin-bottom: 1.5rem;
+    }
+    
+    .slide-btn {
+      display: inline-block;
+      padding: 0.7rem 1.5rem;
+      background-color: #00e676;
+      color: #000;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    
+    .slide-btn:hover {
+      background-color: #00c764;
+    }
+    
+    .slider-nav {
+      text-align: center;
+      margin-top: 1rem;
+    }
+    
+    .slider-dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: #555;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+    
+    .slider-dot.active {
+      background-color: #00e676;
+    }
+    
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      background-color: rgba(0,0,0,0.5);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      font-size: 1.5rem;
+    }
+    
+    .slider-arrow.left {
+      left: 15px;
+    }
+    
+    .slider-arrow.right {
+      right: 15px;
+    }
+    
+    /* El resto de los estilos se mantienen igual */
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="./Img/fj_cintas_logo_transparent.png" alt="FJ CINTAS Logo">
+      <h1 style="color: #167838;;">CINTAS</h1>
+    </div>
+    <div class="search-bar">
+      <input type="text" placeholder="Buscar productos o servicios...">
+    </div>
+  </header>
+
+  <section class="slider-container">
+    <div class="slider">
+      <!-- Slide 1 -->
+      <div class="slide">
+        <h2>¡Bienvenido a FJ CINTAS!</h2>
+        <p>Soluciones confiables en cintas industriales y más.</p>
+        <a href="#contacto" class="slide-btn">Contáctanos</a>
+      </div>
+      
+      <!-- Slide 2 -->
+      <div class="slide">
+        <h2>Productos de Alta Calidad</h2>
+        <p>Descubre nuestra amplia gama de cintas industriales para todo tipo de aplicaciones.</p>
+        <a href="#productos" class="slide-btn">Ver catálogo</a>
+      </div>
+      
+      <!-- Slide 3 -->
+      <div class="slide">
+        <h2>Ofertas Especiales</h2>
+        <p>Aprovecha nuestros descuentos en cintas de seguridad y empaque este mes.</p>
+        <a href="#ofertas" class="slide-btn">Ver ofertas</a>
+      </div>
+    </div>
+    
+    <!-- Flechas de navegación -->
+    <div class="slider-arrow left">&#10094;</div>
+    <div class="slider-arrow right">&#10095;</div>
+    
+    <!-- Puntos de navegación -->
+    <div class="slider-nav">
+      <span class="slider-dot active"></span>
+      <span class="slider-dot"></span>
+      <span class="slider-dot"></span>
+    </div>
+  </section>
+
+  <section class="contact" id="contacto">
+    <h2>Contacto</h2>
+    <a href="mailto:contacto@fjcintas.com">✉ contacto@fjcintas.com</a>
+    <a href="https://wa.me/5215500000000" target="_blank">📱 WhatsApp: +52 1 550 000 0000</a>
+
+    <form class="contact-form">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" required>
+
+      <label for="correo">Correo electrónico:</label>
+      <input type="email" id="correo" name="correo" required>
+
+      <label for="mensaje">Mensaje:</label>
+      <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
+
+  <footer>
+    &copy; 2025 FJ CINTAS. Todos los derechos reservados.
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const slider = document.querySelector('.slider');
+      const slides = document.querySelectorAll('.slide');
+      const dots = document.querySelectorAll('.slider-dot');
+      const arrowLeft = document.querySelector('.slider-arrow.left');
+      const arrowRight = document.querySelector('.slider-arrow.right');
+      let currentIndex = 0;
+      const slideCount = slides.length;
+      
+      // Función para actualizar el slider
+      function updateSlider() {
+        slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+        
+        // Actualizar puntos de navegación
+        dots.forEach((dot, index) => {
+          dot.classList.toggle('active', index === currentIndex);
+        });
+      }
+      
+      // Navegación por puntos
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          currentIndex = index;
+          updateSlider();
+        });
+      });
+      
+      // Flecha derecha
+      arrowRight.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % slideCount;
+        updateSlider();
+      });
+      
+      // Flecha izquierda
+      arrowLeft.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + slideCount) % slideCount;
+        updateSlider();
+      });
+      
+      // Auto-desplazamiento (opcional)
+      let autoSlide = setInterval(() => {
+        currentIndex = (currentIndex + 1) % slideCount;
+        updateSlider();
+      }, 5000);
+      
+      // Pausar auto-desplazamiento al interactuar
+      slider.addEventListener('mouseenter', () => clearInterval(autoSlide));
+      slider.addEventListener('mouseleave', () => {
+        autoSlide = setInterval(() => {
+          currentIndex = (currentIndex + 1) % slideCount;
+          updateSlider();
+        }, 5000);
+      });
+    });
+  </script>
+</body>
+</html>
